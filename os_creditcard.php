@@ -39,10 +39,9 @@ class os_creditcard extends MPFPayment
 	 * @param array                       $data
 	 */
 	public function processPayment($row, $data)
-	{
-		$app    = JFactory::getApplication();
-		$Itemid = $app->input->getInt('Itemid');
-
+	{	$app    = JFactory::getApplication();
+		$Itemid = $app->input->getInt('Itemid', 0);
+		$siteUrl = JUri::base();
 		/**
 		 * Write code to pass the data to the payment gateway for payment processing. Below are some of the import data which you can
 		 * access and pass to the payment gateway:
@@ -63,7 +62,7 @@ class os_creditcard extends MPFPayment
 			$this->onPaymentSuccess($row, $transactionId);
 
 			// Redirect to the registration complete page
-			$app->redirect(JRoute::_('index.php?option=com_eventbooking&view=complete&Itemid=' . $Itemid, false));
+			$app->redirect($siteUrl . 'index.php?option=com_osmembership&view=complete&id=' . $row->id . '&Itemid=' . $Itemid);
 		}
 		else
 		{
@@ -72,7 +71,7 @@ class os_creditcard extends MPFPayment
 			JFactory::getSession()->set('omnipay_payment_error_reason', $errorReason);
 
 			// Redirect to payment failure page
-			$app->redirect(JRoute::_('index.php?option=com_eventbooking&view=failure&Itemid=' . $Itemid, false));
+			$app->redirect($siteUrl . 'index.php?option=com_osmembership&view=failure&id=' . $row->id . '&Itemid=' . $Itemid);
 		}
 	}
 }
