@@ -64,7 +64,7 @@ This method contains code to pass credit card information and necessary billing 
 		$this->onPaymentSuccess($row, $transactionId);
 
 		// Redirect to the registration complete page
-		$app->redirect(JRoute::_('index.php?option=com_eventbooking&view=complete&Itemid=' . $Itemid, false));
+		$app->redirect($siteUrl . 'index.php?option=com_osmembership&view=complete&id=' . $row->id . '&Itemid=' . $Itemid);
 	}
 	else
 	{
@@ -73,6 +73,6 @@ This method contains code to pass credit card information and necessary billing 
 		JFactory::getSession()->set('omnipay_payment_error_reason', $errorReason);
 
 		// Redirect to payment failure page
-		$app->redirect(JRoute::_('index.php?option=com_eventbooking&view=failure&Itemid=' . $Itemid, false));
+		$app->redirect($siteUrl . 'index.php?option=com_osmembership&view=failure&id=' . $row->id . '&Itemid=' . $Itemid);
 	}
     ```
